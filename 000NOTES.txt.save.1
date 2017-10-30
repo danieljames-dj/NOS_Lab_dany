@@ -1,0 +1,46 @@
+FORK
+	pid_t status = fork();
+PIPE
+	int fd[2];
+	int status = pipe(fd);
+	Read and Write using read() and write()
+	Input at fd[1] and Output at fd[0]
+	close(fd[0]);
+SHARED MEMORY
+	int *shmID = shmget(IPC_PRIVATE,size,0666);
+	int *array = shmat(shmid,NULL,0); //To attach in a process
+VFS STAT
+	struct statvfs Data;
+	statvfs(path,&Data);
+	print details in man statvfs
+THREAD
+	pthread_t philosopher[20];
+	pthread_create(&philosopher[i],NULL,eat,(void*)j);
+	void *eat(void *arg) {}
+	pthread_join(philosopher[i],NULL);
+	sem_init(&sem[i],0,1);
+	sem_post(&sem[i]);
+	sem_wait(&sem[i]);
+	sem_destroy(&sem[i]);
+MSG QUEUE
+	msgID = msgget(1234,IPC_CREAT|0666);
+	struct msgbuff { long mtype; char mbuff[20]; };
+	msgsnd
+	msgrcv
+SOCKET
+	Creating socket:
+		int sockID = socket(AF_INET,SOCK_STREAM,0);
+	Binding & Connecting (bind in server & connect in client):
+		struct sockaddr_in test;
+		memset(&test,0,sizeof(test));
+		test.sin_family = AF_INET;
+		test.sin_addr.s_addr = INADDR_ANY;
+		test.sin_port = htons(6789);
+		bind/connect
+	Listening on server:
+		listen(sockID,5);
+	Accepting on server:
+		newSockID = accept(sockID,(struct sockaddr*)&test,&length); // length of type socklen_t
+	Write & Read
+		write(sockID,buff,200);
+		read(sockID,buff,200);
